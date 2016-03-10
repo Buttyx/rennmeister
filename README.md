@@ -1,4 +1,4 @@
-#Rennmeister v1.0
+#Rennmeister v1.0 TEST
 
 [![MEAN.JS Logo](http://meanjs.org/img/logo-small.png)](http://meanjs.org/)
 
