@@ -16,15 +16,19 @@
           <div ng-messages="vm.form.raceForm.place.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Race place is required.</p>
           </div>
-
           <label class="control-label" for="dateFrom">dateFrom</label>
-          <input name="dateFrom" type="datetime" ng-model="vm.race.dateFrom" id="dateFrom" class="form-control" placeholder="">
-
+          <input name="dateFrom" type="text" ng-model="vm.race.dateFrom" id="dateFrom" class="form-control" placeholder="" required>
+          <div ng-messages="vm.form.raceForm.dateFrom.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Race dateFrom is required.</p>
+          </div>
           <label class="control-label" for="dateTo">dateTo</label>
-          <input name="dateTo" type="text" ng-model="vm.race.dateTo" id="dateTo" class="form-control" placeholder="">
+          <input name="dateTo" type="text" ng-model="vm.race.dateTo" id="dateTo" class="form-control" placeholder="" required>
+          <div ng-messages="vm.form.raceForm.dateTo.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Race dateTo is required.</p>
+          </div>
 
           <label class="control-label" for="waypoints">waypoints (JSON)</label>
-          <input name="dateTo" type="text" ng-model="vm.race.waypoints" id="waypoints" class="form-control" placeholder="">
+          <input name="waypoints" type="text" ng-model="vm.race.waypoints" id="waypoints" class="form-control" placeholder="">
 
           <label class="control-label" for="organisator">organisatorId</label>
           <input name="organisator" type="text" ng-model="vm.race.organisator" id="organisator" class="form-control" placeholder="" required>

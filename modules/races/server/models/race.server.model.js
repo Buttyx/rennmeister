@@ -23,12 +23,14 @@ var RaceSchema = new Schema({
     trim: true
   },
   dateFrom: {
-    type: Date,
-    default: Date.now
+    type: String,
+    default: '',
+    required: 'Please fill dateFrom'
   },
   dateTo: {
-    type: Date,
-    default: Date.now
+    type: String,
+    default: '',
+    required: 'Please fill dateTo'
   },
   waypoints: {
     type: Array,
