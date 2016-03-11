@@ -27,11 +27,5 @@
       title: 'Create Organisator',
       state: 'organisators.create'
     });
-
-    // Add the dropdown create item
-    Menus.addSubMenuItem('topbar', 'organisators', {
-      title: 'Dashboard view',
-      state: 'organisators.dashboard'
-    });
   }
 })();

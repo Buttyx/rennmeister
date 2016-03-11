@@ -2,6 +2,21 @@
   <div class="page-header">
     <h1>{{vm.participant.lastName}}, {{vm.participant.firstName}}</h1>
   </div>
+
+  <h4>Races</h4>
+  <div data-ng-repeat="race in vm.races" class="list-group-item">
+    <h4 class="list-group-item-heading" >{{race._id}}: {{race.name}}</h4>
+
+    <a class="btn btn-primary" ng-show="race.takePart"
+       ng-click="vm.removeParticipation(race.takePart)">
+       Remove from race
+    </a>
+    <a class="btn btn-primary" ng-show="!race.takePart"
+       ng-click="vm.participate(race._id)">
+       Add to race
+    </a>
+  </div>
+
   <div class="pull-right">
     <a class="btn btn-primary"
        data-ui-sref="participants.edit({ participantId: vm.participant._id })">

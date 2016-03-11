@@ -31,12 +31,18 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }]
   }, {
-    roles: ['guest'],
+    roles: ['guest', 'user', 'admin'],
     allows: [{
       resources: '/api/races',
       permissions: '*'
     }, {
       resources: '/api/races/:raceId',
+      permissions: '*'
+    }, {
+      resources: '/api/races-participants',
+      permissions: '*'
+    }, {
+      resources: '/api/races-participants/:raceParticipantId',
       permissions: '*'
     }]
   }]);

@@ -13,16 +13,16 @@ var path = require('path'),
  * Create a RaceParticipant
  */
 exports.create = function(req, res) {
-  var race = new RaceParticipant(req.body);
-  race.user = req.user;
+  var raceParticipant = new RaceParticipant(req.body);
+  raceParticipant.user = req.user;
 
-  race.save(function(err) {
+  raceParticipant.save(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(race);
+      res.jsonp(raceParticipant);
     }
   });
 };
@@ -32,30 +32,30 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
   // convert mongoose document to JSON
-  var race = req.race ? req.race.toJSON() : {};
+  var raceParticipant = req.raceParticipant ? req.raceParticipant.toJSON() : {};
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  race.isCurrentUserOwner = req.user && race.user && race.user._id.toString() === req.user._id.toString() ? true : false;
+  raceParticipant.isCurrentUserOwner = true;
 
-  res.jsonp(race);
+  res.jsonp(raceParticipant);
 };
 
 /**
  * Update a RaceParticipant
  */
 exports.update = function(req, res) {
-  var race = req.race ;
+  var raceParticipant = req.raceParticipant ;
 
-  race = _.extend(race , req.body);
+  raceParticipant = _.extend(raceParticipant , req.body);
 
-  race.save(function(err) {
+  raceParticipant.save(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(race);
+      res.jsonp(raceParticipant);
     }
   });
 };
@@ -64,15 +64,15 @@ exports.update = function(req, res) {
  * Delete an RaceParticipant
  */
 exports.delete = function(req, res) {
-  var race = req.race ;
+  var raceParticipant = req.raceParticipant ;
 
-  race.remove(function(err) {
+  raceParticipant.remove(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(race);
+      res.jsonp(raceParticipant);
     }
   });
 };
@@ -87,13 +87,13 @@ exports.list = function(req, res) {
     filter.organisator = organisator;
   }
 
-  RaceParticipant.find().sort('-created').populate('user', 'displayName').exec(function(err, races) {
+  RaceParticipant.find().sort('-created').populate('user', 'displayName').exec(function(err, raceParticipants) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(races);
+      res.jsonp(raceParticipants);
     }
   });
 };
@@ -101,7 +101,7 @@ exports.list = function(req, res) {
 /**
  * RaceParticipant middleware
  */
-exports.raceByID = function(req, res, next, id) {
+exports.raceParticipantByID = function(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
@@ -109,15 +109,15 @@ exports.raceByID = function(req, res, next, id) {
     });
   }
 
-  RaceParticipant.findById(id).populate('user', 'displayName').exec(function (err, race) {
+  RaceParticipant.findById(id).populate('user', 'displayName').exec(function (err, raceParticipant) {
     if (err) {
       return next(err);
-    } else if (!race) {
+    } else if (!raceParticipant) {
       return res.status(404).send({
         message: 'No RaceParticipant with that identifier has been found'
       });
     }
-    req.race = race;
+    req.raceParticipant = raceParticipant;
     next();
   });
 };

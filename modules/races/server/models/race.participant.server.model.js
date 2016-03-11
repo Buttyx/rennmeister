@@ -16,10 +16,10 @@ var RaceParticipantSchema = new Schema({
     required: 'Please fill the participant first name',
     trim: true
   },  
-  secondName: {
+  lastName: {
     type: String,
     default: '',
-    required: 'Please fill the participant second name',
+    required: 'Please fill the participant last name',
     trim: true
   },
   race: {
