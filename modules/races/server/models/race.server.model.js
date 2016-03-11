@@ -38,10 +38,6 @@ var RaceSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Organisator'
   },
-  participants: {
-    type: Array,
-    default: []
-  },
   created: {
     type: Date,
     default: Date.now

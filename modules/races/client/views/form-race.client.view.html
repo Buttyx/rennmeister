@@ -23,6 +23,10 @@
           <label class="control-label" for="dateTo">dateTo</label>
           <input name="dateTo" type="text" ng-model="vm.race.dateTo" id="dateTo" class="form-control" placeholder="">
 
+
+          <label class="control-label" for="waypoints">waypoints (comma-sep.)</label>
+          <input name="dateTo" type="text" ng-model="vm.race.waypoints" id="waypoints" class="form-control" placeholder="">
+
           <label class="control-label" for="organisator">organisatorId</label>
           <input name="organisator" type="text" ng-model="vm.race.organisator" id="organisator" class="form-control" placeholder="" required>
           <div ng-messages="vm.form.raceForm.organisator.$error" role="alert">
