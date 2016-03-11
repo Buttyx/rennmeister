@@ -5,11 +5,12 @@
     .module('organisators')
     .controller('OrganisatorsDashboardController', OrganisatorsDashboardController);
 
-  OrganisatorsDashboardController.$inject = ['OrganisatorsService'];
+  OrganisatorsDashboardController.$inject = ['OrganisatorsService', 'RacesService'];
 
-  function OrganisatorsDashboardController(OrganisatorsService) {
+  function OrganisatorsDashboardController(OrganisatorsService, RacesService) {
     var vm = this;
 
     vm.organisators = OrganisatorsService.query();
+    vm.races = RacesService.query();
   }
 })();
