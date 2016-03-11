@@ -17,8 +17,8 @@ angular.module('core').controller('MapController', ['$scope', 'Authentication',
         }
 
         googleMapService.initMap = function() {
-            var directionsService = new google.maps.DirectionsService;
-            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var directionsService = new google.maps.DirectionsService();
+            var directionsDisplay = new google.maps.DirectionsRenderer();
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 13,
                 center: {
@@ -50,17 +50,16 @@ angular.module('core').controller('MapController', ['$scope', 'Authentication',
             }
 
             var marker = new google.maps.Marker({
-		      map:map,
-		      draggable: false,
-		      optimized: false,
-		      animation: google.maps.Animation.DROP,
-		      position: {lat: 47.396955, lng: 8.500628},
-		      icon: "http://prteamwork.com/styles/default/xenforo/smilies/poop.png"
-		    });
+                map: map,
+                draggable: false,
+                optimized: false,
+                animation: google.maps.Animation.DROP,
+                position: { lat: 47.396955, lng: 8.500628 },
+                icon: "http://prteamwork.com/styles/default/xenforo/smilies/poop.png"
+            });
 
             directionsDisplay.setMap(map);
             calculateAndDisplayRoute(directionsService, directionsDisplay);
-
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -115,6 +114,5 @@ angular.module('core').controller('MapController', ['$scope', 'Authentication',
             });
         }
         google.maps.event.addDomListener(window, 'load', googleMapService.initMap());
-
     }
 ]);
