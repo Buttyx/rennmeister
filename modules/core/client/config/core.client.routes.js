@@ -18,7 +18,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
       templateUrl: 'modules/core/client/views/home.client.view.html'
     })
     .state('map', {
-      url: '/map',
+      url: '/map/:raceId',
       templateUrl: 'modules/core/client/views/map.client.view.html'
     })
     .state('not-found', {

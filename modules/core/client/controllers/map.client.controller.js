@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('MapController', ['$scope', 'Authentication',
-    function($scope, Authentication) {
+angular.module('core').controller('MapController', ['$scope', '$stateParams','Authentication', 'TrackinginfosService', 'RacesService',
+    function($scope, $stateParams, Authentication, TrackinginfosService, RacesService) {
         // This provides Authentication context.
         $scope.authentication = Authentication;
         var googleMapService = {};
@@ -14,6 +14,62 @@ angular.module('core').controller('MapController', ['$scope', 'Authentication',
                 },
                 stopover: true
             };
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+        }
+
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            var races = RacesService.get({raceId: $stateParams.raceId }, function() {
+                var waypts = [];
+                var origin = {
+                        lat: 47.050973,
+                        lng: 8.309290
+                    }
+                var destination = {
+                        lat: 47.050973,
+                        lng: 8.309290
+                    };
+                
+                for (var i in races.waypoints){
+                    var waypoint = races.waypoints[i];
+                    if (i == 0){
+                        origin.lat = waypoint.lat;
+                        origin.lng = waypoint.lng;
+                    } else if (i == races.waypoints.length-1){
+                        destination.lat = waypoint.lat;
+                        destination.lng = waypoint.lng;
+                    } else {
+                        //alert("test: " + JSON.stringify(waypoint));
+                        waypts.push(getWayPointObj(waypoint.lat, waypoint.lng));
+                    }
+                    
+                }
+
+                directionsService.route({
+                    origin: origin,
+                    destination: destination,
+                    waypoints: waypts,
+                    optimizeWaypoints: true,
+                    travelMode: google.maps.TravelMode.WALKING
+                }, function(response, status) {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                        var route = response.routes[0];
+                        // For each route, display summary information.
+                        for (var i = 0; i < route.legs.length; i++) {
+                            var routeSegment = i + 1;
+                            console.log("Segment " + routeSegment + ": " + route.legs[i].start_address + " -> " + route.legs[i].end_address + " (" + route.legs[i].distance.text + ")");
+                        }
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                });
+            });
         }
 
         googleMapService.initMap = function() {
@@ -55,72 +111,29 @@ angular.module('core').controller('MapController', ['$scope', 'Authentication',
                 optimized: false,
                 animation: google.maps.Animation.DROP,
                 position: { lat: 47.396955, lng: 8.500628 },
-                icon: "http://prteamwork.com/styles/default/xenforo/smilies/poop.png"
+                icon: "http://downloadicons.net/sites/default/files/shit-icon-9880.png"
             });
-            new google.maps.Marker({
+            var marker = new google.maps.Marker({
                 map: map,
                 draggable: false,
                 optimized: false,
                 animation: google.maps.Animation.DROP,
                 position: { lat: 47.403839, lng: 8.510123 },
-                icon: "http://prteamwork.com/styles/default/xenforo/smilies/poop.png"
+                //icon: "http://prteamwork.com/styles/default/xenforo/smilies/poop.png" //18
+                icon: "http://downloadicons.net/sites/default/files/shit-icon-9880.png"//32
+                //icon: "http://emojisaurus.com/images/emoji/poop.png"//64
+                //icon: "https://33.media.tumblr.com/avatar_5fcb9c36335a_128.png" //128
+            });
+
+            marker.addListener('click', function() {
+                new google.maps.InfoWindow({ content: "This Dogshit was reported by <b>Matthias Fitzi</b>.<br>THANKS!" }).open(map, marker);
             });
 
             directionsDisplay.setMap(map);
             calculateAndDisplayRoute(directionsService, directionsDisplay);
         }
 
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-            infoWindow.setPosition(pos);
-            infoWindow.setContent(browserHasGeolocation ?
-                'Error: The Geolocation service failed.' :
-                'Error: Your browser doesn\'t support geolocation.');
-        }
-
-        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-            var waypts = [];
-            waypts.push(getWayPointObj(47.390796, 8.523116));
-            waypts.push(getWayPointObj(47.394805, 8.503804));
-            waypts.push(getWayPointObj(47.398930, 8.494964));
-            waypts.push(getWayPointObj(47.405379, 8.519769));
-            waypts.push(getWayPointObj(47.392365, 8.524232));
-
-            /*var checkboxArray = document.getElementById('waypoints');
-            for (var i = 0; i < checkboxArray.length; i++) {
-              if (checkboxArray.options[i].selected) {
-                waypts.push({
-                  location: checkboxArray[i].value,
-                  stopover: true
-                });
-              }
-            }*/
-
-            directionsService.route({
-                origin: {
-                    lat: 47.384752,
-                    lng: 8.521083
-                },
-                destination: {
-                    lat: 47.384752,
-                    lng: 8.521083
-                },
-                waypoints: waypts,
-                optimizeWaypoints: true,
-                travelMode: google.maps.TravelMode.WALKING
-            }, function(response, status) {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                    var route = response.routes[0];
-                    // For each route, display summary information.
-                    for (var i = 0; i < route.legs.length; i++) {
-                        var routeSegment = i + 1;
-                        console.log("Segment " + routeSegment + ": " + route.legs[i].start_address + " -> " + route.legs[i].end_address + " (" + route.legs[i].distance.text + ")");
-                    }
-                } else {
-                    window.alert('Directions request failed due to ' + status);
-                }
-            });
-        }
         google.maps.event.addDomListener(window, 'load', googleMapService.initMap());
+
     }
 ]);
