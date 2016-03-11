@@ -39,7 +39,7 @@ angular.module('core').controller('MapController', ['$scope', 'Authentication',
                     };
 
                     infoWindow.setPosition(pos);
-                    infoWindow.setContent('Location found.');
+                    infoWindow.setContent('Xavier Butty <br>Position: 1<br>Puls: 120');
                     map.setCenter(pos);
                 }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -49,12 +49,20 @@ angular.module('core').controller('MapController', ['$scope', 'Authentication',
                 handleLocationError(false, infoWindow, map.getCenter());
             }
 
-            var marker = new google.maps.Marker({
+            new google.maps.Marker({
                 map: map,
                 draggable: false,
                 optimized: false,
                 animation: google.maps.Animation.DROP,
                 position: { lat: 47.396955, lng: 8.500628 },
+                icon: "http://prteamwork.com/styles/default/xenforo/smilies/poop.png"
+            });
+            new google.maps.Marker({
+                map: map,
+                draggable: false,
+                optimized: false,
+                animation: google.maps.Animation.DROP,
+                position: { lat: 47.403839, lng: 8.510123 },
                 icon: "http://prteamwork.com/styles/default/xenforo/smilies/poop.png"
             });
 
