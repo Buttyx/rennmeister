@@ -7,11 +7,7 @@
        data-ui-sref="organisators.view({ organisatorId: organisator._id })"
        class="list-group-item">
       <small class="list-group-item-text">
-        Posted on
-        <span data-ng-bind="organisator.created | date:'mediumDate'"></span>
-        by
-        <span data-ng-if="organisator.user" data-ng-bind="organisator.user.displayName"></span>
-        <span data-ng-if="!organisator.user">Deleted User</span>
+        ID: {{ organisator._id }}
       </small>
       <h4 class="list-group-item-heading" data-ng-bind="organisator.name"></h4>
     </a>
