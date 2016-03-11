@@ -26,6 +26,18 @@
           pageTitle: 'Organisators Dashboard'
         }
       })
+      .state('organisators.race.dashboard', {
+        url: '/dashboard/race/:raceId',
+        templateUrl: 'modules/organisators/client/views/dashboard-race-organisators.client.view.html',
+        controller: 'OrganisatorsRaceDashboardController',
+        controllerAs: 'vm',
+        resolve: {
+          raceResolve: getRace
+        },
+        data: {
+          pageTitle: 'Race Dashboard'
+        }
+      })
       .state('organisators.list', {
         url: '',
         templateUrl: 'modules/organisators/client/views/list-organisators.client.view.html',
@@ -76,10 +88,17 @@
   }
 
   getOrganisator.$inject = ['$stateParams', 'OrganisatorsService'];
+  getRace.$inject = ['$stateParams', 'RacesService'];
 
   function getOrganisator($stateParams, OrganisatorsService) {
     return OrganisatorsService.get({
       organisatorId: $stateParams.organisatorId
+    }).$promise;
+  }  
+
+  function getRace($stateParams, RacesService) {
+    return RacesService.get({
+      raceId: $stateParams.raceId
     }).$promise;
   }
 
