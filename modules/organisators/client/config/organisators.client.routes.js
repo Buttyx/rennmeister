@@ -26,8 +26,8 @@
           pageTitle: 'Organisators Dashboard'
         }
       })
-      .state('organisators.race.dashboard', {
-        url: '/dashboard/race/:raceId',
+      .state('organisators.race-dashboard', {
+        url: '/dashboard/:organisatorId/race/:raceId',
         templateUrl: 'modules/organisators/client/views/dashboard-race-organisators.client.view.html',
         controller: 'OrganisatorsRaceDashboardController',
         controllerAs: 'vm',
