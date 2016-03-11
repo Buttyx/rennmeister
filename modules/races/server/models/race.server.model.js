@@ -16,9 +16,31 @@ var RaceSchema = new Schema({
     required: 'Please fill Race name',
     trim: true
   },
+  place: {
+    type: String,
+    default: '',
+    required: 'Please add the location of the race',
+    trim: true
+  },
+  dateFrom: {
+    type: Date,
+    default: Date.now
+  },
+  dateTo: {
+    type: Date,
+    default: Date.now
+  },
+  waypoints: {
+    type: Array,
+    default: []
+  },
   created: {
     type: Date,
     default: Date.now
+  },
+  organisator: {
+    type: Schema.ObjectId,
+    ref: 'Organisator'
   },
   user: {
     type: Schema.ObjectId,

@@ -34,10 +34,10 @@ exports.invokeRolesPolicies = function () {
     roles: ['guest'],
     allows: [{
       resources: '/api/races',
-      permissions: ['get']
+      permissions: '*'
     }, {
       resources: '/api/races/:raceId',
-      permissions: ['get']
+      permissions: '*'
     }]
   }]);
 };
@@ -46,7 +46,7 @@ exports.invokeRolesPolicies = function () {
  * Check If Races Policy Allows
  */
 exports.isAllowed = function (req, res, next) {
-  var roles = (req.user) ? req.user.roles : ['guest'];
+  var roles = (req.user) ? req.user.roles : ['admin'];
 
   // If an Race is being processed and the current user created it then allow any manipulation
   if (req.race && req.user && req.race.user && req.race.user.id === req.user.id) {

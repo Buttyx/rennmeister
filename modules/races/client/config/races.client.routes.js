@@ -32,7 +32,7 @@
           raceResolve: newRace
         },
         data: {
-          roles: ['user', 'admin'],
+          //roles: ['user', 'admin', 'guest'],
           pageTitle : 'Races Create'
         }
       })
@@ -45,7 +45,7 @@
           raceResolve: getRace
         },
         data: {
-          roles: ['user', 'admin'],
+          //roles: ['user', 'admin'],
           pageTitle: 'Edit Race {{ raceResolve.name }}'
         }
       })
