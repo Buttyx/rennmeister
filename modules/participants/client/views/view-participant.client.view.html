@@ -2,8 +2,7 @@
   <div class="page-header">
     <h1>{{vm.participant.lastName}}, {{vm.participant.firstName}}</h1>
   </div>
-  <div class="pull-right"
-       data-ng-show="vm.participant.isCurrentUserOwner">
+  <div class="pull-right">
     <a class="btn btn-primary"
        data-ui-sref="participants.edit({ participantId: vm.participant._id })">
       <i class="glyphicon glyphicon-edit"></i>

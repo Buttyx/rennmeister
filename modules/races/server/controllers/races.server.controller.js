@@ -12,11 +12,16 @@ var path = require('path'),
 /**
  * Create a Race
  */
-exports.create = function(req, res) {
+exports.create = function (req, res) {
+  var waypointsString = req.body.waypoints;
+  var waypointsArray = JSON.parse(waypointsString);
   var race = new Race(req.body);
   race.user = req.user;
+  race.waypoints = waypointsArray;
+  console.log(waypointsString);
+  console.log(JSON.stringify(race));
 
-  race.save(function(err) {
+  race.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -30,7 +35,7 @@ exports.create = function(req, res) {
 /**
  * Show the current Race
  */
-exports.read = function(req, res) {
+exports.read = function (req, res) {
   // convert mongoose document to JSON
   var race = req.race ? req.race.toJSON() : {};
 
@@ -44,12 +49,12 @@ exports.read = function(req, res) {
 /**
  * Update a Race
  */
-exports.update = function(req, res) {
-  var race = req.race ;
+exports.update = function (req, res) {
+  var race = req.race;
 
-  race = _.extend(race , req.body);
+  race = _.extend(race, req.body);
 
-  race.save(function(err) {
+  race.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -63,10 +68,10 @@ exports.update = function(req, res) {
 /**
  * Delete an Race
  */
-exports.delete = function(req, res) {
-  var race = req.race ;
+exports.delete = function (req, res) {
+  var race = req.race;
 
-  race.remove(function(err) {
+  race.remove(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -80,14 +85,14 @@ exports.delete = function(req, res) {
 /**
  * List of Races
  */
-exports.list = function(req, res) { 
+exports.list = function (req, res) {
   var filter = {};
 
   if (typeof organisator !== 'undefined') {
     filter.organisator = organisator;
   }
 
-  Race.find().sort('-created').populate('user', 'displayName').exec(function(err, races) {
+  Race.find().sort('-created').populate('user', 'displayName').exec(function (err, races) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -101,7 +106,7 @@ exports.list = function(req, res) {
 /**
  * Race middleware
  */
-exports.raceByID = function(req, res, next, id) {
+exports.raceByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
