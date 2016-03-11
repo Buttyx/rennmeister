@@ -1,16 +1,22 @@
-<section ng-controller="MapController">
-    <div>
-        <style type="text/css" scoped>
-        #map {
-            height: 600px;
-            float: left;
-            width: 100%
+'use strict';
+
+angular.module('core').controller('MapController', ['$scope', 'Authentication',
+    function($scope, Authentication) {
+        // This provides Authentication context.
+        $scope.authentication = Authentication;
+        var googleMapService = {};
+
+        function getWayPointObj(lat, lng) {
+            return {
+                location: {
+                    lat: lat,
+                    lng: lng
+                },
+                stopover: true
+            };
         }
-        </style>
-        <div id="map"></div>
-        <script>
-        function initMap() {
-        alert("test");
+
+        googleMapService.initMap = function() {
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay = new google.maps.DirectionsRenderer;
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -43,6 +49,15 @@
                 handleLocationError(false, infoWindow, map.getCenter());
             }
 
+            var marker = new google.maps.Marker({
+		      map:map,
+		      draggable: false,
+		      optimized: false,
+		      animation: google.maps.Animation.DROP,
+		      position: {lat: 47.396955, lng: 8.500628},
+		      icon: "http://prteamwork.com/styles/default/xenforo/smilies/poop.png"
+		    });
+
             directionsDisplay.setMap(map);
             calculateAndDisplayRoute(directionsService, directionsDisplay);
 
@@ -53,16 +68,6 @@
             infoWindow.setContent(browserHasGeolocation ?
                 'Error: The Geolocation service failed.' :
                 'Error: Your browser doesn\'t support geolocation.');
-        }
-
-        function getWayPointObj(lat, lng) {
-            return {
-                location: {
-                    lat: lat,
-                    lng: lng
-                },
-                stopover: true
-            };
         }
 
         function calculateAndDisplayRoute(directionsService, directionsDisplay) {
@@ -109,8 +114,7 @@
                 }
             });
         }
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap">
-        </script>
-    </div>
-</section>
+        google.maps.event.addDomListener(window, 'load', googleMapService.initMap());
+
+    }
+]);
