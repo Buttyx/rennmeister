@@ -7,9 +7,19 @@
       <fieldset>
         <div class="form-group" show-errors>
           <label class="control-label" for="name">Name</label>
-          <input name="name" type="text" ng-model="vm.organisator.name" id="name" class="form-control" placeholder="Name" required>
+          <input name="name" type="text" ng-model="vm.organisator.name" id="name" class="form-control" placeholder="" required>
           <div ng-messages="vm.form.organisatorForm.name.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Organisator name is required.</p>
+          </div>
+          <label class="control-label" for="birthdate">Birthdate</label>
+          <input name="birthdate" type="text" ng-model="vm.organisator.birthdate" id="birthdate" class="form-control" placeholder="" required>
+          <div ng-messages="vm.form.organisatorForm.birthdate.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Organisator birthdate is required.</p>
+          </div>
+          <label class="control-label" for="location">Location</label>
+          <input name="location" type="text" ng-model="vm.organisator.location" id="location" class="form-control" placeholder="" required>
+          <div ng-messages="vm.form.organisatorForm.location.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Organisator location is required.</p>
           </div>
         </div>
         <div class="form-group">

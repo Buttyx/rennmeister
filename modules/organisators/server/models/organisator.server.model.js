@@ -13,19 +13,19 @@ var OrganisatorSchema = new Schema({
   name: {
     type: String,
     default: '',
-    required: 'Please fill Organisator name',
+    required: 'Please fill organisator name',
     trim: true
   },
   birthdate: {
-    type: Date,
-    default: Date.now,
-    required: 'Please fill Organisator birthdate'
+    type: String,
+    default: '',
+    required: 'Please fill organisator birthdate'
   },
   location: {
     type: String,
-    default: 'Switzerland',
+    default: '',
+    required: 'Please fill organisator location',
     trim: true
-
   },
   created: {
     type: Date,

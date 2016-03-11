@@ -25,8 +25,7 @@
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'participants', {
       title: 'Create Participant',
-      state: 'participants.create',
-      roles: ['user']
+      state: 'participants.create'
     });
   }
 })();

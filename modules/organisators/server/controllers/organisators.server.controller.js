@@ -12,10 +12,10 @@ var path = require('path'),
 /**
  * Create a Organisator
  */
-exports.create = function(req, res) {
+exports.create = function (req, res) {
   var organisator = new Organisator(req.body);
 
-  organisator.save(function(err) {
+  organisator.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -29,7 +29,7 @@ exports.create = function(req, res) {
 /**
  * Show the current Organisator
  */
-exports.read = function(req, res) {
+exports.read = function (req, res) {
   // convert mongoose document to JSON
   var organisator = req.organisator ? req.organisator.toJSON() : {};
 
@@ -43,12 +43,12 @@ exports.read = function(req, res) {
 /**
  * Update a Organisator
  */
-exports.update = function(req, res) {
-  var organisator = req.organisator ;
+exports.update = function (req, res) {
+  var organisator = req.organisator;
 
-  organisator = _.extend(organisator , req.body);
+  organisator = _.extend(organisator, req.body);
 
-  organisator.save(function(err) {
+  organisator.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -62,10 +62,10 @@ exports.update = function(req, res) {
 /**
  * Delete an Organisator
  */
-exports.delete = function(req, res) {
-  var organisator = req.organisator ;
+exports.delete = function (req, res) {
+  var organisator = req.organisator;
 
-  organisator.remove(function(err) {
+  organisator.remove(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -79,8 +79,8 @@ exports.delete = function(req, res) {
 /**
  * List of Organisators
  */
-exports.list = function(req, res) { 
-  Organisator.find().sort('-created').exec(function(err, organisators) {
+exports.list = function (req, res) {
+  Organisator.find().sort('-created').exec(function (err, organisators) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -94,7 +94,7 @@ exports.list = function(req, res) {
 /**
  * Organisator middleware
  */
-exports.organisatorByID = function(req, res, next, id) {
+exports.organisatorByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({

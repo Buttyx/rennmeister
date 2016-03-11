@@ -26,7 +26,7 @@
     Menus.addSubMenuItem('topbar', 'organisators', {
       title: 'Create Organisator',
       state: 'organisators.create'
-    });    
+    });
 
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'organisators', {
