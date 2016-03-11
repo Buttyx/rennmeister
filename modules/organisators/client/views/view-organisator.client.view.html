@@ -2,8 +2,11 @@
   <div class="page-header">
     <h1 data-ng-bind="vm.organisator.name"></h1>
   </div>
-  <div class="pull-right"
-       data-ng-show="vm.organisator.isCurrentUserOwner">
+  <div class="pull-right">
+    <a class="btn btn-primary"
+       data-ui-sref="organisators.dashboard({ organisatorId: vm.organisator._id })">
+      <i class="glyphicon glyphicon-signal"></i>
+    </a>    
     <a class="btn btn-primary"
        data-ui-sref="organisators.edit({ organisatorId: vm.organisator._id })">
       <i class="glyphicon glyphicon-edit"></i>

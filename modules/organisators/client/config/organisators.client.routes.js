@@ -15,10 +15,13 @@
         template: '<ui-view/>'
       })
       .state('organisators.dashboard', {
-        url: '/dashboard',
+        url: '/dashboard/:organisatorId',
         templateUrl: 'modules/organisators/client/views/dashboard-organisators.client.view.html',
         controller: 'OrganisatorsDashboardController',
         controllerAs: 'vm',
+        resolve: {
+          organisatorResolve: getOrganisator
+        },
         data: {
           pageTitle: 'Organisators Dashboard'
         }

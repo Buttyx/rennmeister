@@ -80,8 +80,14 @@ exports.delete = function(req, res) {
 /**
  * List of Races
  */
-exports.list = function(req, res) { 
-  Race.find().sort('-created').populate('user', 'displayName').exec(function(err, races) {
+exports.list = function(req, res, next, organisator) { 
+  var filter = {};
+
+  if (typeof organisator !== 'undefined') {
+    filter.organisator = organisator;
+  }
+
+  Race.find(filter).sort('-created').populate('user', 'displayName').exec(function(err, races) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

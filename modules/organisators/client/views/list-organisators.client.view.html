@@ -3,14 +3,18 @@
     <h1>Organisators</h1>
   </div>
   <div class="list-group">
-    <a data-ng-repeat="organisator in vm.organisators"
-       data-ui-sref="organisators.view({ organisatorId: organisator._id })"
+    <div data-ng-repeat="organisator in vm.organisators"
        class="list-group-item">
-      <small class="list-group-item-text">
-        ID: {{ organisator._id }}
-      </small>
       <h4 class="list-group-item-heading" data-ng-bind="organisator.name"></h4>
-    </a>
+      <a class="btn btn-primary"
+         data-ui-sref="organisators.view({ organisatorId: organisator._id })">
+        <i class="glyphicon glyphicon-cog"></i>
+      </a>
+      <a class="btn btn-primary"
+         data-ui-sref="organisators.dashboard({ organisatorId: organisator._id })">
+        <i class="glyphicon glyphicon-signal"></i>
+      </a> 
+    </div>
   </div>
   <div class="alert alert-warning text-center" data-ng-if="vm.organisators.$resolved && !vm.organisators.length">
     No Organisators yet, why don't you <a data-ui-sref="organisators.create">create one</a>?
