@@ -6,7 +6,7 @@
     <a class="btn btn-primary"
        data-ui-sref="organisators.dashboard({ organisatorId: vm.organisator._id })">
       <i class="glyphicon glyphicon-signal"></i>
-    </a>    
+    </a>
     <a class="btn btn-primary"
        data-ui-sref="organisators.edit({ organisatorId: vm.organisator._id })">
       <i class="glyphicon glyphicon-edit"></i>
@@ -15,15 +15,5 @@
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span data-ng-bind="vm.organisator.created | date:'mediumDate'"></span>
-      by
-      <span data-ng-if="vm.organisator.user"
-            data-ng-bind="vm.organisator.user.displayName"></span>
-      <span data-ng-if="!vm.organisator.user">Deleted User</span>
-    </em>
-  </small>
   <p class="lead" data-ng-bind="vm.organisator.content"></p>
 </section>

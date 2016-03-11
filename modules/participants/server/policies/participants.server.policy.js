@@ -46,6 +46,5 @@ exports.invokeRolesPolicies = function () {
  * Check If Participants Policy Allows
  */
 exports.isAllowed = function (req, res, next) {
-  var roles = (req.user) ? req.user.roles : ['guest'];
   return next();
 };
