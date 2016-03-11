@@ -58,6 +58,18 @@
         data:{
           pageTitle: 'Participant {{ articleResolve.name }}'
         }
+      })
+      .state('participants.tracker', {
+        url: '/:participantId/tracker',
+        templateUrl: 'modules/participants/client/views/tracker-participant.client.view.html',
+        controller: 'TrackerController',
+        controllerAs: 'vm',
+        resolve: {
+          participantResolve: getParticipant
+        },
+        data:{
+          pageTitle: 'Tracker for {{ articleResolve.name }}'
+        }
       });
   }
 
