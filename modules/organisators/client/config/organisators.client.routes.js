@@ -14,6 +14,15 @@
         url: '/organisators',
         template: '<ui-view/>'
       })
+      .state('organisators.dashboard', {
+        url: '/dashboard',
+        templateUrl: 'modules/organisators/client/views/dashboard-organisators.client.view.html',
+        controller: 'OrganisatorsDashboardController',
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Organisators Dashboard'
+        }
+      })
       .state('organisators.list', {
         url: '',
         templateUrl: 'modules/organisators/client/views/list-organisators.client.view.html',
