@@ -6,7 +6,7 @@
   <div class="list-group">
     <div data-ng-repeat="organisator in vm.organisators" class="list-group-item">
 
-      <h4 class="list-group-item-heading" data-ng-bind="organisator.name"></h4>
+      <h4 class="list-group-item-heading">{{organisator._id}}: {{organisator.name}}</h4>
 
       <a class="btn btn-primary"
          data-ui-sref="organisators.view({ organisatorId: organisator._id })">

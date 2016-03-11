@@ -25,8 +25,7 @@
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'trackinginfos', {
       title: 'Create Trackinginfo',
-      state: 'trackinginfos.create',
-      roles: ['user']
+      state: 'trackinginfos.create'
     });
   }
 })();

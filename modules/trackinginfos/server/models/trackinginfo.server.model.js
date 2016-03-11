@@ -10,15 +10,15 @@ var mongoose = require('mongoose'),
  * Trackinginfo Schema
  */
 var TrackinginfoSchema = new Schema({
-  name: {
-    type: String,
-    default: '',
-    required: 'Please fill Trackinginfo name',
-    trim: true
-  },
-  raceParticipant: {
+  participant: {
     type: Schema.ObjectId,
-    ref: 'Participant'
+    ref: 'Participant',
+    required: 'Please fill participantId'
+  },
+  race: {
+    type: Schema.ObjectId,
+    ref: 'Race',
+    required: 'Please fill raceId'
   },
   dateTime: {
     type: Date,
@@ -26,23 +26,21 @@ var TrackinginfoSchema = new Schema({
   },
   pulse: {
     type: Number,
-    default: 0
+    default: ''
   },
   lat: {
     type: Number,
-    default: 0
+    default: '',
+    required: 'Please fill latitude'
   },
   lng: {
     type: Number,
-    default: 0
+    default: '',
+    required: 'Please fill longitude'
   },
   created: {
     type: Date,
     default: Date.now
-  },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
   }
 });
 

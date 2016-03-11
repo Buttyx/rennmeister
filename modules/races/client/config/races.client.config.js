@@ -25,8 +25,7 @@
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'races', {
       title: 'Create Race',
-      state: 'races.create',
-      roles: ['user']
+      state: 'races.create'
     });
   }
 })();

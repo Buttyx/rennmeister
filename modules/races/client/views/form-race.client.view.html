@@ -7,9 +7,26 @@
       <fieldset>
         <div class="form-group" show-errors>
           <label class="control-label" for="name">Name</label>
-          <input name="name" type="text" ng-model="vm.race.name" id="name" class="form-control" placeholder="Name" required>
+          <input name="name" type="text" ng-model="vm.race.name" id="name" class="form-control" placeholder="" required>
           <div ng-messages="vm.form.raceForm.name.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Race name is required.</p>
+          </div>
+          <label class="control-label" for="place">place</label>
+          <input name="place" type="text" ng-model="vm.race.place" id="place" class="form-control" placeholder="" required>
+          <div ng-messages="vm.form.raceForm.place.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Race place is required.</p>
+          </div>
+
+          <label class="control-label" for="dateFrom">dateFrom</label>
+          <input name="dateFrom" type="datetime" ng-model="vm.race.dateFrom" id="dateFrom" class="form-control" placeholder="">
+
+          <label class="control-label" for="dateTo">dateTo</label>
+          <input name="dateTo" type="text" ng-model="vm.race.dateTo" id="dateTo" class="form-control" placeholder="">
+
+          <label class="control-label" for="organisator">organisatorId</label>
+          <input name="organisator" type="text" ng-model="vm.race.organisator" id="organisator" class="form-control" placeholder="" required>
+          <div ng-messages="vm.form.raceForm.organisator.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Race organisatorId is required.</p>
           </div>
         </div>
         <div class="form-group">
