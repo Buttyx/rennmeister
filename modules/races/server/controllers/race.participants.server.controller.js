@@ -91,7 +91,7 @@ exports.list = function(req, res) {
     filter.race = req.query.race;
   }
 
-  RaceParticipant.find(filter).sort('-created').populate('Trackinginfo').populate('user', 'displayName').exec(function(err, raceParticipants) {
+  RaceParticipant.find(filter).sort('-created').populate('trackingInfo').populate('user', 'displayName').exec(function(err, raceParticipants) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -113,7 +113,7 @@ exports.raceParticipantByID = function(req, res, next, id) {
     });
   }
 
-  RaceParticipant.findById(id).populate('Trackinginfo').populate('user', 'displayName').exec(function (err, raceParticipant) {
+  RaceParticipant.findById(id).populate('trackingInfo').populate('user', 'displayName').exec(function (err, raceParticipant) {
     if (err) {
       return next(err);
     } else if (!raceParticipant) {

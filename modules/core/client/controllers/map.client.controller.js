@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('MapController', ['$scope', '$stateParams', 'Authentication', 'TrackinginfosService', 'RacesService',
-    function($scope, $stateParams, Authentication, TrackinginfosService, RacesService) {
+angular.module('core').controller('MapController', ['$scope', '$stateParams', 'Authentication', 'TrackinginfosService', 'RacesParticipationsService', 'RacesService',
+    function($scope, $stateParams, Authentication, TrackinginfosService, RacesParticipationsService, RacesService) {
         // This provides Authentication context.
         $scope.authentication = Authentication;
         var googleMapService = {};
@@ -24,20 +24,24 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
         }
 
         function setParticipantMarker(map) {
-            var trackingInfos = TrackinginfosService.query(function() {
-                for (var i in trackingInfos) {
-                    var trackingInfo = trackingInfos[i];
-                    if (trackingInfo.lng && trackingInfo.lat) {
-                        var marker = new google.maps.Marker({
-                            map: map,
-                            draggable: false,
-                            optimized: false,
-                            animation: google.maps.Animation.DROP,
-                            position: { lat: trackingInfo.lat, lng: trackingInfo.lng },
-                            icon: "http://herschel.esac.esa.int/hcss-doc-13.0/load/hipeowner/images/Run.gif",
-                            title: trackingInfo.participant + ' \n Puls: ' + trackingInfo.pulse 
-                        });
-                        //var mapInfo = new google.maps.InfoWindow({ content: trackingInfo.participant + ' <br>Puls: ' + trackingInfo.pulse }).open(map, marker);
+            var raceParticipants = RacesParticipationsService.query({ race: $stateParams.raceId }, function() {
+                for (var i in raceParticipants) {
+                    var raceParticipant = raceParticipants[i];
+                    var trackingInfo = raceParticipant.trackingInfo;
+                    if (trackingInfo) {
+                        if (trackingInfo.lng && trackingInfo.lat) {
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                draggable: false,
+                                optimized: false,
+                                animation: google.maps.Animation.DROP,
+                                position: { lat: trackingInfo.lat, lng: trackingInfo.lng },
+                                icon: "http://herschel.esac.esa.int/hcss-doc-13.0/load/hipeowner/images/Run.gif",
+                                title: raceParticipant.firstName + ' ' + raceParticipant.lastName + ' \n Puls: ' + trackingInfo.pulse
+                            });
+                            //var mapInfo = new google.maps.InfoWindow({ content: trackingInfo.participant + ' <br>Puls: ' + trackingInfo.pulse }).open(map, marker);
+                        }
+
                     }
 
                 }
@@ -135,7 +139,7 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
             var directionsService = new google.maps.DirectionsService();
             var directionsDisplay = new google.maps.DirectionsRenderer();
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 13,
+                zoom: 18,
                 center: {
                     lat: 47.384752,
                     lng: 8.521083
@@ -172,7 +176,7 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
 
         google.maps.event.addDomListener(window, 'load', googleMapService.initMap());
 
-        
+
 
     }
 ]);
