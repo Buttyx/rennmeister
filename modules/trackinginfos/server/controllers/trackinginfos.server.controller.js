@@ -6,6 +6,8 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Trackinginfo = mongoose.model('Trackinginfo'),
+  RaceParticipant = mongoose.model('RaceParticipant'),
+  racesParticipants = require(path.resolve('./modules/races/server/controllers/race.participants.server.controller')),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
@@ -16,15 +18,22 @@ exports.create = function(req, res) {
   var trackinginfo = new Trackinginfo(req.body);
   trackinginfo.user = req.user;
 
-  trackinginfo.save(function(err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.jsonp(trackinginfo);
-    }
-  });
+  racesParticipants.raceParticipantByRaceAndParticipation(trackinginfo.race, trackinginfo.participant, function (rp) {
+    trackinginfo.save(function(err, ti) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        rp.trackingInfo = ti._id;
+        rp.save(function () {
+          console.log('SAVE OK');
+          res.jsonp(trackinginfo);
+        });
+      }
+    });
+  })
+
 };
 
 /**
