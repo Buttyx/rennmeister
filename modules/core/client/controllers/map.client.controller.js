@@ -24,17 +24,22 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
         }
 
         function setParticipantMarker(map) {
-            var races = RacesService.get({ raceId: $stateParams.raceId }, function() {
-                for (var i in races.waypoints) {
-                    var waypoint = races.waypoints[i];
-                    new google.maps.Marker({
-                        map: map,
-                        draggable: false,
-                        optimized: false,
-                        animation: google.maps.Animation.DROP,
-                        position: { lat: waypoint.lat, lng: waypoint.lng },
-                        icon: "http://downloadicons.net/sites/default/files/shit-icon-9880.png"
-                    });
+            var trackingInfos = TrackinginfosService.query(function() {
+                for (var i in trackingInfos) {
+                    var trackingInfo = trackingInfos[i];
+                    if (trackingInfo.lng && trackingInfo.lat) {
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            draggable: false,
+                            optimized: false,
+                            animation: google.maps.Animation.DROP,
+                            position: { lat: trackingInfo.lat, lng: trackingInfo.lng },
+                            icon: "http://herschel.esac.esa.int/hcss-doc-13.0/load/hipeowner/images/Run.gif",
+                            title: trackingInfo.participant + ' \n Puls: ' + trackingInfo.pulse 
+                        });
+                        //var mapInfo = new google.maps.InfoWindow({ content: trackingInfo.participant + ' <br>Puls: ' + trackingInfo.pulse }).open(map, marker);
+                    }
+
                 }
             });
         }
@@ -72,8 +77,7 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
 
                 for (var i in waypointsArray) {
                     var waypoint = waypointsArray[i];
-                        console.log(waypointsArray.length + " number: "+ waypoint.number +"; waypoint.type: "+ i +" - "+ waypoint.type + " - " + waypoint.lat + " - " + waypoint.lng);
-                    if(waypoint.type == "eat"){
+                    if (waypoint.type == "eat") {
                         var marker = new google.maps.Marker({
                             map: directionsDisplay.getMap(),
                             draggable: false,
@@ -82,7 +86,7 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                             position: { lat: waypoint.lat, lng: waypoint.lng },
                             icon: "http://www.tupalo.at/images/markers/icon_round_cafe.png" //32
                         });
-                    } else if(waypoint.type == "medi"){
+                    } else if (waypoint.type == "medi") {
                         var marker = new google.maps.Marker({
                             map: directionsDisplay.getMap(),
                             draggable: false,
@@ -137,6 +141,7 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                     lng: 8.521083
                 }
             });
+            /* //not needed anymore, shoud come from trackingInfo/raceParticipant
             var infoWindow = new google.maps.InfoWindow({
                 map: map
             });
@@ -158,14 +163,16 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
             } else {
                 // Browser doesn't support Geolocation
                 handleLocationError(false, infoWindow, map.getCenter());
-            }
+            }*/
             setMessageMarker(map);
-            //setParticipantMarker(map);
+            setParticipantMarker(map);
             directionsDisplay.setMap(map);
             calculateAndDisplayRoute(directionsService, directionsDisplay);
         }
 
         google.maps.event.addDomListener(window, 'load', googleMapService.initMap());
+
+        
 
     }
 ]);
