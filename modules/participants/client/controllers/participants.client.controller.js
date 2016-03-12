@@ -29,7 +29,7 @@
         };
 
     vm.races = RacesService.query(racesReadyCallback);
-    vm.racesParticipants = RacesParticipationsService.query(racesReadyCallback);
+    vm.racesParticipants = RacesParticipationsService.query({ participant: participant._id }, racesReadyCallback);
     vm.authentication = Authentication;
     vm.participant = participant;
     vm.error = null;

@@ -27,7 +27,6 @@ exports.create = function(req, res) {
       } else {
         rp.trackingInfo = ti._id;
         rp.save(function () {
-          console.log('SAVE OK');
           res.jsonp(trackinginfo);
         });
       }

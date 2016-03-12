@@ -83,11 +83,15 @@ exports.delete = function(req, res) {
 exports.list = function(req, res) { 
   var filter = {};
 
-  if (typeof organisator !== 'undefined') {
-    filter.organisator = organisator;
+  if (req.query.participant) {
+    filter.participant = req.query.participant;
+  }  
+
+  if (req.query.race) {
+    filter.race = req.query.race;
   }
 
-  RaceParticipant.find().sort('-created').populate('Trackinginfo').populate('user', 'displayName').exec(function(err, raceParticipants) {
+  RaceParticipant.find(filter).sort('-created').populate('Trackinginfo').populate('user', 'displayName').exec(function(err, raceParticipants) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
