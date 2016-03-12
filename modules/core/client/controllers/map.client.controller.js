@@ -1,10 +1,12 @@
 'use strict';
 
-angular.module('core').controller('MapController', ['$scope', '$stateParams', 'Authentication', 'TrackinginfosService', 'RacesParticipationsService', 'RacesService',
-    function($scope, $stateParams, Authentication, TrackinginfosService, RacesParticipationsService, RacesService) {
+angular.module('core').controller('MapController', ['$scope', '$stateParams', 'Authentication', 'TrackinginfosService', 'RacesParticipationsService', 'RacesService', '$timeout',
+    function($scope, $stateParams, Authentication, TrackinginfosService, RacesParticipationsService, RacesService, $timeout) {
         // This provides Authentication context.
         $scope.authentication = Authentication;
-        var googleMapService = {};
+        var googleMapService = {},
+            map,
+            participantMarkers = [];
 
         function getWayPointObj(lat, lng) {
             return {
@@ -24,6 +26,10 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
         }
 
         function setParticipantMarker(map) {
+            for (var i = 0; i < participantMarkers.length; i++) {
+                participantMarkers[i].setMap(null);
+            }
+            participantMarkers = [];
             var raceParticipants = RacesParticipationsService.query({ race: $stateParams.raceId }, function() {
                 for (var i in raceParticipants) {
                     var raceParticipant = raceParticipants[i];
@@ -34,11 +40,14 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                                 map: map,
                                 draggable: false,
                                 optimized: false,
-                                animation: google.maps.Animation.DROP,
                                 position: { lat: trackingInfo.lat, lng: trackingInfo.lng },
-                                icon: "http://herschel.esac.esa.int/hcss-doc-13.0/load/hipeowner/images/Run.gif",
-                                title: raceParticipant.firstName + ' ' + raceParticipant.lastName + ' \n Puls: ' + trackingInfo.pulse
+                                icon: "http://www.willamettevalleynorml.org/images/bullet6.gif",
+                                icon: "http://www.teknotrack.lk/wp-content/uploads/2015/12/positionFlash_icon.gif",
+                                //icon: "http://herschel.esac.esa.int/hcss-doc-13.0/load/hipeowner/images/Run.gif",
+                                title: raceParticipant.firstName + ' ' + raceParticipant.lastName + ' \n Puls: ' + trackingInfo.pulse,
+                                zIndex: 100
                             });
+                            participantMarkers.push(marker);
                             //var mapInfo = new google.maps.InfoWindow({ content: trackingInfo.participant + ' <br>Puls: ' + trackingInfo.pulse }).open(map, marker);
                         }
 
@@ -88,7 +97,8 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                             optimized: false,
                             animation: google.maps.Animation.DROP,
                             position: { lat: waypoint.lat, lng: waypoint.lng },
-                            icon: "http://www.tupalo.at/images/markers/icon_round_cafe.png" //32
+                            icon: "http://d1zwyexo3ug1ac.cloudfront.net/revision-3b0d653/images/markers/icon_round_restaurant.png",
+                            zIndex: 50
                         });
                     } else if (waypoint.type == "medi") {
                         var marker = new google.maps.Marker({
@@ -97,7 +107,28 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                             optimized: false,
                             animation: google.maps.Animation.DROP,
                             position: { lat: waypoint.lat, lng: waypoint.lng },
-                            icon: "http://www.tupalo.pl/images/markers/icon_round_health.png" //32
+                            icon: "http://www.tupalo.pl/images/markers/icon_round_health.png",
+                            zIndex: 50
+                        });
+                    } else if (waypoint.type == "start") {
+                        var marker = new google.maps.Marker({
+                            map: directionsDisplay.getMap(),
+                            draggable: false,
+                            optimized: false,
+                            animation: google.maps.Animation.DROP,
+                            position: { lat: waypoint.lat, lng: waypoint.lng },
+                            icon: "http://www.tupalo.at/images/markers/icon_round_education.png",
+                            zIndex: 50
+                        });
+                    } else if (waypoint.type == "end") {
+                        var marker = new google.maps.Marker({
+                            map: directionsDisplay.getMap(),
+                            draggable: false,
+                            optimized: false,
+                            animation: google.maps.Animation.DROP,
+                            position: { lat: waypoint.lat, lng: waypoint.lng },
+                            icon: "http://d1zwyexo3ug1ac.cloudfront.net/revision-fec650c/images/markers/icon_round_misc.png",
+                            zIndex: 50
                         });
                     }
                     if (i == 0) {
@@ -135,10 +166,18 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
             });
         }
 
+        function refreshLocation() {
+            setParticipantMarker(map);
+
+            $timeout(refreshLocation, 3000);
+        };
+
+
+
         googleMapService.initMap = function() {
             var directionsService = new google.maps.DirectionsService();
-            var directionsDisplay = new google.maps.DirectionsRenderer();
-            var map = new google.maps.Map(document.getElementById('map'), {
+            var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 18,
                 center: {
                     lat: 47.384752,
@@ -169,9 +208,9 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                 handleLocationError(false, infoWindow, map.getCenter());
             }*/
             setMessageMarker(map);
-            setParticipantMarker(map);
             directionsDisplay.setMap(map);
             calculateAndDisplayRoute(directionsService, directionsDisplay);
+            refreshLocation();
         }
 
         google.maps.event.addDomListener(window, 'load', googleMapService.initMap());

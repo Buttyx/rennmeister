@@ -27,7 +27,7 @@
                   trackingInfosService = new TrackinginfosService();
 
               trackingInfosService.participant = vm.participant._id;
-              trackingInfosService.pulse = Math.random()*80 +100;
+              trackingInfosService.pulse = Math.round(Math.random()*50 +80);
               trackingInfosService.race = race;
               trackingInfosService.lat = pos.lat;
               trackingInfosService.lng = pos.lng;
