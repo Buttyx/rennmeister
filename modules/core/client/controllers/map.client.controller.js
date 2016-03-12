@@ -58,12 +58,13 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
         }
 
         function setMessageMarker(map) {
+
             var marker = new google.maps.Marker({
                 map: map,
                 draggable: false,
                 optimized: false,
                 animation: google.maps.Animation.DROP,
-                position: { lat: 47.403839, lng: 8.510123 },
+                position: { lat: 47.385579, lng: 8.522645 },
                 //icon: "http://prteamwork.com/styles/default/xenforo/smilies/poop.png" //18
                 icon: "http://downloadicons.net/sites/default/files/shit-icon-9880.png" //32
                     //icon: "http://emojisaurus.com/images/emoji/poop.png"//64
@@ -71,7 +72,7 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
             });
 
             marker.addListener('click', function() {
-                new google.maps.InfoWindow({ content: "This Dogshit was reported by <b>Matthias Fitzi</b>.<br>THANKS!" }).open(map, marker);
+                new google.maps.InfoWindow({ content: "This Dogshit was reported by <b>Pierre Billon</b>.<br>THANKS!" }).open(map, marker);
             });
         }
 
@@ -95,7 +96,6 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                             map: directionsDisplay.getMap(),
                             draggable: false,
                             optimized: false,
-                            animation: google.maps.Animation.DROP,
                             position: { lat: waypoint.lat, lng: waypoint.lng },
                             icon: "http://d1zwyexo3ug1ac.cloudfront.net/revision-3b0d653/images/markers/icon_round_restaurant.png",
                             zIndex: 50
@@ -105,7 +105,6 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                             map: directionsDisplay.getMap(),
                             draggable: false,
                             optimized: false,
-                            animation: google.maps.Animation.DROP,
                             position: { lat: waypoint.lat, lng: waypoint.lng },
                             icon: "http://www.tupalo.pl/images/markers/icon_round_health.png",
                             zIndex: 50
@@ -115,7 +114,6 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                             map: directionsDisplay.getMap(),
                             draggable: false,
                             optimized: false,
-                            animation: google.maps.Animation.DROP,
                             position: { lat: waypoint.lat, lng: waypoint.lng },
                             icon: "http://www.tupalo.at/images/markers/icon_round_education.png",
                             zIndex: 50
@@ -125,7 +123,6 @@ angular.module('core').controller('MapController', ['$scope', '$stateParams', 'A
                             map: directionsDisplay.getMap(),
                             draggable: false,
                             optimized: false,
-                            animation: google.maps.Animation.DROP,
                             position: { lat: waypoint.lat, lng: waypoint.lng },
                             icon: "http://d1zwyexo3ug1ac.cloudfront.net/revision-fec650c/images/markers/icon_round_misc.png",
                             zIndex: 50
