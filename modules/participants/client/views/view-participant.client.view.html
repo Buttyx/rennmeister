@@ -3,23 +3,7 @@
     <h1>{{vm.participant.lastName}}, {{vm.participant.firstName}}</h1>
   </div>
 
-  <h4>Races</h4>
-  <div data-ng-repeat="race in vm.races" class="list-group-item">
-    <h4 class="list-group-item-heading" >{{race._id}}: {{race.name}}</h4>
-
-    <a class="btn btn-primary" ng-show="race.takePart"
-       data-ui-sref="participants.tracker({ participantId: vm.participant._id, raceId: race._id })">
-       Track
-    </a>
-    <a class="btn btn-primary" ng-show="race.takePart"
-       ng-click="vm.removeParticipation(race.takePart)">
-       Remove from race
-    </a>
-    <a class="btn btn-primary" ng-show="!race.takePart"
-       ng-click="vm.participate(race._id)">
-       Add to race
-    </a>
-  </div>
+  <b>Address:</b> {{vm.participant.address}}
 
   <div class="pull-right">
     <a class="btn btn-primary"
@@ -30,5 +14,33 @@
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
+
+  <br/><br/>
+
+  <h4>Related races</h4>
+  <div data-ng-repeat="race in vm.races" class="list-group-item">
+    <p class="list-group-item-heading" >
+      {{race.name}} 
+      <span ng-show="race.takePart"> (signed in)</span>
+      <span ng-show="!race.takePart"> (not signed in)</span>
+
+      <span class="pull-right" style="margin-top: -3px;">
+        <a class="btn btn btn-success" ng-show="race.takePart"
+           data-ui-sref="participants.tracker({ participantId: vm.participant._id, raceId: race._id })">
+           Track
+        </a>
+        <a class="btn btn-danger" ng-show="race.takePart"
+           ng-click="vm.removeParticipation(race.takePart)">
+           Remove from race
+        </a>
+        <a class="btn btn-primary" ng-show="!race.takePart"
+           ng-click="vm.participate(race._id)">
+           Add to race
+        </a>
+      </span>
+    </p>
+
+  </div>
+
   <p class="lead" data-ng-bind="vm.participant.content"></p>
 </section>

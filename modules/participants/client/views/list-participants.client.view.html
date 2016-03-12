@@ -5,12 +5,14 @@
   <div class="list-group">
     <div data-ng-repeat="participant in vm.participants" class="list-group-item">
 
-      <h4 class="list-group-item-heading" >{{participant._id}}: {{participant.lastName}}</h4>
-
-      <a class="btn btn-primary"
-         data-ui-sref="participants.view({ participantId: participant._id })">
-        <i class="glyphicon glyphicon-cog"></i>
+      <a
+           data-ui-sref="participants.view({ participantId: participant._id })">
+          <p class="list-group-item-heading" >
+            {{participant.firstName}} {{participant.lastName}}
+            <i class="glyphicon glyphicon-menu-right"></i>
+          </p>
       </a>
+
 
     </div>
   </div>
