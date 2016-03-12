@@ -26,6 +26,10 @@ var RaceParticipantSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Race'
   },  
+  trackingInfo: {
+    type: Schema.ObjectId,
+    ref: 'Trackinginfo'
+  },
   participant: {
     type: Schema.ObjectId,
     ref: 'Participant'

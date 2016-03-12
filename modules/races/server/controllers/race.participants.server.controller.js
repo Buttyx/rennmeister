@@ -87,7 +87,7 @@ exports.list = function(req, res) {
     filter.organisator = organisator;
   }
 
-  RaceParticipant.find().sort('-created').populate('user', 'displayName').exec(function(err, raceParticipants) {
+  RaceParticipant.find().sort('-created').populate('Trackinginfo').populate('user', 'displayName').exec(function(err, raceParticipants) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -109,7 +109,7 @@ exports.raceParticipantByID = function(req, res, next, id) {
     });
   }
 
-  RaceParticipant.findById(id).populate('user', 'displayName').exec(function (err, raceParticipant) {
+  RaceParticipant.findById(id).populate('Trackinginfo').populate('user', 'displayName').exec(function (err, raceParticipant) {
     if (err) {
       return next(err);
     } else if (!raceParticipant) {
@@ -119,5 +119,17 @@ exports.raceParticipantByID = function(req, res, next, id) {
     }
     req.raceParticipant = raceParticipant;
     next();
+  });
+};
+
+/**
+ * RaceParticipant middleware
+ */
+exports.raceParticipantByRaceAndParticipation = function(raceId, participantId, callback) {
+
+  RaceParticipant.findOne({race: raceId, participant: participantId}).sort('-created').exec(function (err, raceParticipant) {
+    if (!err) {
+      callback(raceParticipant);
+    } 
   });
 };
