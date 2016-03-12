@@ -8,6 +8,10 @@
     <h4 class="list-group-item-heading" >{{race._id}}: {{race.name}}</h4>
 
     <a class="btn btn-primary" ng-show="race.takePart"
+       data-ui-sref="participants.tracker({ participantId: vm.participant._id, raceId: race._id })">
+       Track
+    </a>
+    <a class="btn btn-primary" ng-show="race.takePart"
        ng-click="vm.removeParticipation(race.takePart)">
        Remove from race
     </a>

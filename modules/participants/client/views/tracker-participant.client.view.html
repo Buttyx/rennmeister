@@ -1,8 +1,10 @@
 <section>
   <div class="page-header">
-    <h1>TRACKER {{vm.participant.lastName}}, {{vm.participant.firstName}}</h1>
+    <h2>Tracking {{vm.participant.lastName}}, {{vm.participant.firstName}}</h2>
   </div>
   <div class="pull-right">
-    {{ vm.location }}
+  	<div data-ng-repeat="location in vm.locations" class="list-group-item">
+    	{{ location.lat }} - {{ location.lng }}
+  	</div>
   </div>
 </section>

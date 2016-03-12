@@ -60,12 +60,13 @@
         }
       })
       .state('participants.tracker', {
-        url: '/:participantId/tracker',
+        url: '/:participantId/tracker/:raceId',
         templateUrl: 'modules/participants/client/views/tracker-participant.client.view.html',
         controller: 'TrackerController',
         controllerAs: 'vm',
         resolve: {
-          participantResolve: getParticipant
+          participantResolve: getParticipant,
+          raceResolve: getRace
         },
         data:{
           pageTitle: 'Tracker for {{ articleResolve.name }}'
@@ -74,10 +75,17 @@
   }
 
   getParticipant.$inject = ['$stateParams', 'ParticipantsService'];
+  getRace.$inject = ['$stateParams', 'RacesService'];
 
   function getParticipant($stateParams, ParticipantsService) {
     return ParticipantsService.get({
       participantId: $stateParams.participantId
+    }).$promise;
+  }  
+
+  function getRace($stateParams, RacesService) {
+    return RacesService.get({
+      raceId: $stateParams.raceId
     }).$promise;
   }
 

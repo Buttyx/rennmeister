@@ -6,14 +6,15 @@
     .module('participants')
     .controller('TrackerController', TrackerController);
 
-  TrackerController.$inject = ['$scope', '$state', 'Authentication', 'participantResolve', 'TrackinginfosService', '$timeout'];
+  TrackerController.$inject = ['$scope', '$state', 'Authentication', 'participantResolve', 'raceResolve', 'TrackinginfosService', '$timeout'];
 
-  function TrackerController ($scope, $state, Authentication, participant, TrackinginfosService, $timeout) {
+  function TrackerController ($scope, $state, Authentication, participant, race, TrackinginfosService, $timeout) {
     var vm = this;
 
     vm.authentication = Authentication;
     vm.participant = participant;
-    vm.location;
+    vm.race = race;
+    vm.locations = [];
 
     var refreshLocation = function () {
       // Try HTML5 geolocation.
@@ -26,13 +27,13 @@
                   trackingInfosService = new TrackinginfosService();
 
               trackingInfosService.participant = vm.participant._id;
-              trackingInfosService.pulse = 156;
+              trackingInfosService.pulse = Math.random()*80 +100;
               trackingInfosService.race = '56e318bbea64528fdbc1ffda';
               trackingInfosService.lat = pos.lat;
               trackingInfosService.lng = pos.lng;
 
               trackingInfosService.$save()
-              vm.location = JSON.stringify(pos);
+              vm.locations.push(pos);
 
 
           }, function() {
@@ -42,7 +43,7 @@
           console.log('Can not get location!');
       }
 
-      $timeout(refreshLocation, 200);
+      $timeout(refreshLocation, 5000);
     };
 
     refreshLocation();
