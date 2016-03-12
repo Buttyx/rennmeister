@@ -41,7 +41,7 @@
 
     function removeParticipation(rp) {
       if (confirm('Are you sure you want to remove the participation?')) {
-        rp.$remove();
+        rp.$remove($state.go('participants.view'));
       }
     };
 
@@ -51,7 +51,7 @@
         participation.participant = participant._id;
         participation.firstName = participant.firstName;
         participation.lastName = participant.lastName;
-        participation.$save();
+        participation.$save($state.go('participants.view'));
     };
 
     // Remove existing Participant
