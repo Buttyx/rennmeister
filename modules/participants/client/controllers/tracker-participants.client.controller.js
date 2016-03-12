@@ -28,7 +28,7 @@
 
               trackingInfosService.participant = vm.participant._id;
               trackingInfosService.pulse = Math.random()*80 +100;
-              trackingInfosService.race = '56e318bbea64528fdbc1ffda';
+              trackingInfosService.race = race;
               trackingInfosService.lat = pos.lat;
               trackingInfosService.lng = pos.lng;
 
